@@ -2,58 +2,6 @@
 
 [![Join the chat at https://gitter.im/ConsenSys/smart-contract-best-practices](https://badges.gitter.im/ConsenSys/smart-contract-best-practices.svg)](https://gitter.im/ConsenSys/smart-contract-best-practices?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Table of contents
-
-<!-- TOC built using Sublime's MarkdownTOC plugin -->
-<!-- MarkdownTOC -->
-
-- [General Philosophy](#general-philosophy)
-  - [Fundamental Tradeoffs: Simplicity versus Complexity cases](#fundamental-tradeoffs-simplicity-versus-complexity-cases)
-- [Security Notifications](#security-notifications)
-- [Recommendations for Smart Contract Security in Solidity](#recommendations-for-smart-contract-security-in-solidity)
-  - [External Calls](#external-calls)
-  - [Enforce invariants with `assert()`](#enforce-invariants-with-assert)
-  - [Use `assert()` and `require()` properly](#use-assert-and-require-properly)
-  - [Beware rounding with integer division](#beware-rounding-with-integer-division)
-  - [Remember that Ether can be forcibly sent to an account](#remember-that-ether-can-be-forcibly-sent-to-an-account)
-  - [Don't assume contracts are created with zero balance](#dont-assume-contracts-are-created-with-zero-balance)
-  - [Remember that on-chain data is public](#remember-that-on-chain-data-is-public)
-  - [Be aware of the tradeoffs between abstract contracts and interfaces](#be-aware-of-the-tradeoffs-between-abstract-contracts-and-interfaces)
-  - [In 2-party or N-party contracts, beware of the possibility that some participants may "drop offline" and not return](#in-2-party-or-n-party-contracts-beware-of-the-possibility-that-some-participants-may-drop-offline-and-not-return)
-  - [Keep fallback functions simple](#keep-fallback-functions-simple)
-  - [Explicitly mark visibility in functions and state variables](#explicitly-mark-visibility-in-functions-and-state-variables)
-  - [Lock pragmas to specific compiler version](#lock-pragmas-to-specific-compiler-version)
-  - [Beware division by zero \(Solidity < 0.4\)](#beware-division-by-zero-solidity--04)
-  - [Differentiate functions and events](#differentiate-functions-and-events)
-  - [Prefer newer Solidity constructs](#prefer-newer-solidity-constructs)
-- [Known Attacks](#known-attacks)
-  - [Race Conditions\*](#race-conditions%5C)
-  - [Transaction-Ordering Dependence \(TOD\) / Front Running](#transaction-ordering-dependence-tod--front-running)
-  - [Timestamp Dependence](#timestamp-dependence)
-  - [Integer Overflow and Underflow](#integer-overflow-and-underflow)
-  - [DoS with \(Unexpected\) revert](#dos-with-unexpected-revert)
-  - [DoS with Block Gas Limit](#dos-with-block-gas-limit)
-  - [~~Call Depth Attack~~](#%7E%7Ecall-depth-attack%7E%7E)
-- [Software Engineering Techniques](#software-engineering-techniques)
-  - [Upgrading Broken Contracts](#upgrading-broken-contracts)
-  - [Circuit Breakers \(Pause contract functionality\)](#circuit-breakers-pause-contract-functionality)
-  - [Speed Bumps \(Delay contract actions\)](#speed-bumps-delay-contract-actions)
-  - [Rate Limiting](#rate-limiting)
-  - [Contract Rollout](#contract-rollout)
-  - [Bug Bounty Programs](#bug-bounty-programs)
-- [Security Tools](#security-tools)
-- [Linters](#linters)
-- [Future improvements](#future-improvements)
-- [Smart Contract Security Bibliography](#smart-contract-security-bibliography)
-- [Reviewers](#reviewers)
-- [Bill Gleim \(03/15/2017 0244f4e\)](#bill-gleim-03152017-0244f4e)
-- [License](#license)
-
-<!-- /MarkdownTOC -->
-
-
-
-
 This document is designed to provide a starting *security* baseline for intermediate Solidity programmers.  It additionally includes *security philosophies; bug bounty program guidelines; documentation and procedures; and tools.*
 
 Pull requests are very welcome, from small fixes to sections, and if you've written an article or blog post, please add it to the [bibliography.](#bibliography)  See our [Contribution Guidelines](CONTRIBUTING.md).
