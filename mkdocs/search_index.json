@@ -2,13 +2,18 @@
     "docs": [
         {
             "location": "/",
-            "text": "Ethereum Contract Security Techniques and Tips\n\u00b6\n\n\n\n\nThis document is designed to provide a starting \nsecurity\n baseline for intermediate Solidity programmers.  It additionally includes \nsecurity philosophies; bug bounty program guidelines; documentation and procedures; and tools.\n\n\nPull requests are very welcome, from small fixes to sections, and if you've written an article or blog post, please add it to the \nbibliography.\n  See our \nContribution Guidelines\n.\n\n\nAdditional Requested Content\n\u00b6\n\n\nWe especially welcome content in the following areas:\n\n\n\n\nTesting Solidity code (structure, frameworks, common test idioms)\n\n\nSoftware engineering practices for smart contracts and/or blockchain-based programming",
+            "text": "Ethereum Contract Security Techniques and Tips\n\u00b6\n\n\n\n\nThis document is designed to provide a starting \nsecurity\n baseline for intermediate Solidity programmers.  It additionally includes \nsecurity philosophies; bug bounty program guidelines; documentation and procedures; and tools.\n\n\nPull requests are very welcome,\n\u00b6\n\n\nFrom small fixes to new full sections. If you've written an article or blog post, please add it to the \nbibliography\n.  See our \nContribution Guidelines\n for some guidance on style, and the target audience.\n\n\nAdditional Requested Content\n\u00b6\n\n\nWe especially welcome content in the following areas:\n\n\n\n\nTesting Solidity code (structure, frameworks, common test idioms)\n\n\nSoftware engineering practices for smart contracts and/or blockchain-based programming",
             "title": "Home"
         },
         {
             "location": "/#ethereum-contract-security-techniques-and-tips",
-            "text": "This document is designed to provide a starting  security  baseline for intermediate Solidity programmers.  It additionally includes  security philosophies; bug bounty program guidelines; documentation and procedures; and tools.  Pull requests are very welcome, from small fixes to sections, and if you've written an article or blog post, please add it to the  bibliography.   See our  Contribution Guidelines .",
+            "text": "This document is designed to provide a starting  security  baseline for intermediate Solidity programmers.  It additionally includes  security philosophies; bug bounty program guidelines; documentation and procedures; and tools.",
             "title": "Ethereum Contract Security Techniques and Tips"
+        },
+        {
+            "location": "/#pull-requests-are-very-welcome",
+            "text": "From small fixes to new full sections. If you've written an article or blog post, please add it to the  bibliography .  See our  Contribution Guidelines  for some guidance on style, and the target audience.",
+            "title": "Pull requests are very welcome,"
         },
         {
             "location": "/#additional-requested-content",
@@ -39,11 +44,6 @@
             "location": "/general_philosophy/#duplication-versus-reuse",
             "text": "A smart contract system from a software engineering perspective wishes to maximize reuse where reasonable.  There are many ways to reuse contract code in Solidity.  Using proven previously-deployed contracts  which you own  is generally the safest manner to achieve code reuse.  Duplication is frequently relied upon in cases where self-owned previously-deployed contracts are not available.  Efforts such as  Live Libs  and  Zeppelin Solidity  seek to provide patterns such that secure code can be re-used without duplication.  Any contract security analyses must include any re-used code that has not previously established a level of trust commensurate with the funds at risk in the target smart contract system.",
             "title": "Duplication versus Reuse"
-        },
-        {
-            "location": "/security_notifications/",
-            "text": "This is a list of resources that will often highlight discovered exploits in Ethereum or Solidity. The official source of security notifications is the Ethereum Blog, but in many cases, vulnerabilities will be disclosed and discussed earlier in other locations.\n\n\n\n\nEthereum Blog\n: The official Ethereum blog\n\n\nEthereum Blog - Security only\n: All blog posts that are tagged \nSecurity\n\n\nEthereum Gitter\n chat rooms\n\n\nSolidity\n\n\nGo-Ethereum\n\n\nCPP-Ethereum\n\n\nResearch\n\n\nReddit\n\n\nNetwork Stats\n\n\n\n\nIt's highly recommended that you \nregularly\n read all these sources, as exploits they note may impact your contracts.\n\n\nAdditionally, here is a list of Ethereum core developers who may write about security, and see the \nbibliography\n for more from the community.\n\n\n\n\nVitalik Buterin\n: \nTwitter\n, \nGithub\n, \nReddit\n, \nEthereum Blog\n\n\nDr. Christian Reitwiessner\n: \nTwitter\n, \nGithub\n, \nEthereum Blog\n\n\nDr. Gavin Wood\n: \nTwitter\n, \nBlog\n, \nGithub\n\n\nVlad Zamfir\n: \nTwitter\n, \nGithub\n, \nEthereum Blog\n\n\n\n\nBeyond following core developers, it is critical to participate in the wider blockchain-related security community - as security disclosures or observations will come through a variety of parties.",
-            "title": "Security Notifications"
         },
         {
             "location": "/recommendations/",
@@ -281,8 +281,13 @@
             "title": "Linters"
         },
         {
+            "location": "/security_notifications/",
+            "text": "This is a list of resources that will often highlight discovered exploits in Ethereum or Solidity. The official source of security notifications is the Ethereum Blog, but in many cases, vulnerabilities will be disclosed and discussed earlier in other locations.\n\n\n\n\nEthereum Blog\n: The official Ethereum blog\n\n\nEthereum Blog - Security only\n: All blog posts that are tagged \nSecurity\n\n\nEthereum Gitter\n chat rooms\n\n\nSolidity\n\n\nGo-Ethereum\n\n\nCPP-Ethereum\n\n\nResearch\n\n\nReddit\n\n\nNetwork Stats\n\n\n\n\nIt's highly recommended that you \nregularly\n read all these sources, as exploits they note may impact your contracts.\n\n\nAdditionally, here is a list of Ethereum core developers who may write about security, and see the \nbibliography\n for more from the community.\n\n\n\n\nVitalik Buterin\n: \nTwitter\n, \nGithub\n, \nReddit\n, \nEthereum Blog\n\n\nDr. Christian Reitwiessner\n: \nTwitter\n, \nGithub\n, \nEthereum Blog\n\n\nDr. Gavin Wood\n: \nTwitter\n, \nBlog\n, \nGithub\n\n\nVlad Zamfir\n: \nTwitter\n, \nGithub\n, \nEthereum Blog\n\n\n\n\nBeyond following core developers, it is critical to participate in the wider blockchain-related security community - as security disclosures or observations will come through a variety of parties.",
+            "title": "Security Notifications"
+        },
+        {
             "location": "/future_improvements/",
-            "text": "Editor Security Warnings\n: Editors will soon alert for common security errors, not just compilation errors. Browser Solidity is getting these features soon.\n\n\n\n\n\n\nNew functional languages that compile to EVM bytecode\n: Functional languages gives certain guarantees over procedural languages like Solidity, namely immutability within a function and strong compile time checking. This can reduce the risk of errors by providing deterministic behavior. (for more see \nthis\n, Curry-Howard correspondence, and linear logic)",
+            "text": "New functional languages that compile to EVM bytecode\n: Functional languages gives certain guarantees over procedural languages like Solidity, namely immutability within a function and strong compile time checking. This can reduce the risk of errors by providing deterministic behavior. (for more see \nthis\n, Curry-Howard correspondence, and linear logic)",
             "title": "Future improvements"
         },
         {
@@ -312,13 +317,8 @@
         },
         {
             "location": "/about/contributing/",
-            "text": "We welcome all contributions - send a pull request or open an issue. When possible, send different pull requests by section/topic.\n\n\nFeel free to peruse the \nopen issues\n for ideas which need to be expanded on a bit here.\n\n\nLayout and Compilation\n\u00b6\n\n\nWe aren't using the \nold-src\n folder anymore. You should directly edit the README.md instead.\n\n\nAudience\n\u00b6\n\n\nWrite for an intermediate Ethereum developer, they know the basics of Solidity programming and have coded a number of contracts\n\n\nStyle Guidelines\n\u00b6\n\n\nGeneral\n\u00b6\n\n\n\n\nFavor succinctness in writing\n\n\nUse max 3-4 sentences in a section (exceptions can be made when critical)\n\n\nShow, don\u2019t tell (examples speak more than lengthy exposition)\n\n\nInclude a simple, illustrative example rather than complex examples that require substantial, extraneous reading\n\n\nAdd a source link to the original document when available\n\n\nCreate new sections when warranted\n\n\nKeep code lines under 80 characters when possible\n\n\nMark code\n as insecure, bad, good where relevant\n\n\nUse the format of the \nAirbnb Javascript Style guide\n as a starting point\n\n\n\n\nRecommendations Section\n\u00b6\n\n\n\n\nAlways favor a declarative tip starting with a verb for the section title\n\n\nInclude good and bad examples, when possible\n\n\nEnsure each subsection has an anchor tag for future hyperlinking\n\n\n\n\nAttacks Section\n\u00b6\n\n\n\n\nProvide an example - then point to a recommendation for the solution in the relevant section of the doc\n\n\nList first/most visible attack, where possible\n\n\nEnsure each subsection has an anchor tag for future hyperlinking\n\n\nMark vulnerable pieces of code as \n// INSECURE",
+            "text": "We welcome all contributions - send a pull request or open an issue. When possible, send different pull requests by section/topic.\n\n\nFeel free to peruse the \nopen issues\n for ideas which need to be expanded on a bit here.\n\n\nAudience\n\u00b6\n\n\nWrite for an intermediate Ethereum developer, they know the basics of Solidity programming and have coded a number of contracts\n\n\nStyle Guidelines\n\u00b6\n\n\nGeneral\n\u00b6\n\n\n\n\nFavor succinctness in writing\n\n\nUse max 3-4 sentences in a section (exceptions can be made when critical)\n\n\nShow, don\u2019t tell (examples speak more than lengthy exposition)\n\n\nInclude a simple, illustrative example rather than complex examples that require substantial, extraneous reading\n\n\nAdd a source link to the original document when available\n\n\nCreate new sections when warranted\n\n\nKeep code lines under 80 characters when possible\n\n\nMark code\n as insecure, bad, good where relevant\n\n\nUse the format of the \nAirbnb Javascript Style guide\n as a starting point\n\n\n\n\nRecommendations Section\n\u00b6\n\n\n\n\nAlways favor a declarative tip starting with a verb for the section title\n\n\nInclude good and bad examples, when possible\n\n\nEnsure each subsection has an anchor tag for future hyperlinking\n\n\n\n\nAttacks Section\n\u00b6\n\n\n\n\nProvide an example - then point to a recommendation for the solution in the relevant section of the doc\n\n\nList first/most visible attack, where possible\n\n\nEnsure each subsection has an anchor tag for future hyperlinking\n\n\nMark vulnerable pieces of code as \n// INSECURE",
             "title": "Contributing"
-        },
-        {
-            "location": "/about/contributing/#layout-and-compilation",
-            "text": "We aren't using the  old-src  folder anymore. You should directly edit the README.md instead.",
-            "title": "Layout and Compilation"
         },
         {
             "location": "/about/contributing/#audience",

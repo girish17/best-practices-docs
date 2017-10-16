@@ -8,7 +8,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://maurelian.github.io/best-practices-docs/known_attacks/">
+        <link rel="canonical" href="https://github.com/ConsenSys/smart-contract-best-practices/known_attacks/">
       
       
         <meta name="author" content="ConsenSys">
@@ -65,7 +65,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://maurelian.github.io/best-practices-docs" title="Ethereum Smart Contract Best Practices" class="md-header-nav__button md-logo">
+        <a href="https://github.com/ConsenSys/smart-contract-best-practices" title="Ethereum Smart Contract Best Practices" class="md-header-nav__button md-logo">
           
             <i class="md-icon md-icon--home"></i>
           
@@ -119,7 +119,7 @@
   
 
 
-  <a href="https://github.com/maurelian/best-practices-docs" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/ConsenSys/smart-contract-best-practices" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -167,7 +167,7 @@
   
 
 
-  <a href="https://github.com/maurelian/best-practices-docs" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/ConsenSys/smart-contract-best-practices" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -204,18 +204,6 @@
   <li class="md-nav__item">
     <a href="../general_philosophy/" title="General Philosophy" class="md-nav__link">
       General Philosophy
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../security_notifications/" title="Security Notifications" class="md-nav__link">
-      Security Notifications
     </a>
   </li>
 
@@ -377,6 +365,18 @@
   <li class="md-nav__item">
     <a href="../security_tools/" title="Security Tools" class="md-nav__link">
       Security Tools
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../security_notifications/" title="Security Notifications" class="md-nav__link">
+      Security Notifications
     </a>
   </li>
 
@@ -573,14 +573,14 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/maurelian/best-practices-docs/edit/master/docs/known_attacks.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/ConsenSys/smart-contract-best-practices/edit/master/docs/known_attacks.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                   <h1>Known Attacks</h1>
                 
-                <h3 id="race-conditions">Race Conditions<a class="headerlink" href="#race-conditions" title="Permanent link">&para;</a></h3>
+                <h2 id="race-conditions">Race Conditions<a class="headerlink" href="#race-conditions" title="Permanent link">&para;</a></h2>
 <p>One of the major dangers of calling external contracts is that they can take over the control flow, and make changes to your data that the calling function wasn't expecting. This class of bug can take many forms, and both of the major bugs that led to the DAO's collapse were bugs of this sort.</p>
-<h4 id="reentrancy">Reentrancy<a class="headerlink" href="#reentrancy" title="Permanent link">&para;</a></h4>
+<h3 id="reentrancy">Reentrancy<a class="headerlink" href="#reentrancy" title="Permanent link">&para;</a></h3>
 <p>The first version of this bug to be noticed involved functions that could be called repeatedly, before the first invocation of the function was finished. This may cause the different invocations of the function to interact in destructive ways.</p>
 <div class="codehilite"><pre><span></span>// INSECURE
 mapping (address =&gt; uint) private userBalances;
@@ -605,7 +605,7 @@ function withdrawBalance() public {
 </pre></div>
 
 <p>Note that if you had another function which called <code>withdrawBalance()</code>, it would be potentially subject to the same attack, so you must treat any function which calls an untrusted contract as itself untrusted. See below for further discussion of potential solutions.</p>
-<h4 id="cross-function-race-conditions">Cross-function Race Conditions<a class="headerlink" href="#cross-function-race-conditions" title="Permanent link">&para;</a></h4>
+<h3 id="cross-function-race-conditions">Cross-function Race Conditions<a class="headerlink" href="#cross-function-race-conditions" title="Permanent link">&para;</a></h3>
 <p>An attacker may also be able to do a similar attack using two different functions that share the same state.</p>
 <div class="codehilite"><pre><span></span>// INSECURE
 mapping (address =&gt; uint) private userBalances;
@@ -626,7 +626,7 @@ function withdrawBalance() public {
 
 <p>In this case, the attacker calls <code>transfer()</code> when their code is executed on the external call in <code>withdrawBalance</code>. Since their balance has not yet been set to 0, they are able to transfer the tokens even though they already received the withdrawal. This vulnerability was also used in the DAO attack.</p>
 <p>The same solutions will work, with the same caveats. Also note that in this example, both functions were part of the same contract. However, the same bug can occur across multiple contracts, if those contracts share state.</p>
-<h4 id="pitfalls-in-race-condition-solutions">Pitfalls in Race Condition Solutions<a class="headerlink" href="#pitfalls-in-race-condition-solutions" title="Permanent link">&para;</a></h4>
+<h3 id="pitfalls-in-race-condition-solutions">Pitfalls in Race Condition Solutions<a class="headerlink" href="#pitfalls-in-race-condition-solutions" title="Permanent link">&para;</a></h3>
 <p>Since race conditions can occur across multiple functions, and even multiple contracts, any solution aimed at preventing reentry will not be sufficient.</p>
 <p>Instead, we have recommended finishing all internal work first, and only then calling the external function. This rule, if followed carefully, will allow you to avoid race conditions. However, you need to not only avoid calling external functions too soon, but also avoid calling functions which call external functions. For example, the following is insecure:</p>
 <div class="codehilite"><pre><span></span>// INSECURE
@@ -726,10 +726,10 @@ contract StateHolder {
 <p>An attacker can call <code>getLock()</code>, and then never call <code>releaseLock()</code>. If they do this, then the contract will be locked forever, and no further changes will be able to be made. If you use mutexes to protect against race conditions, you will need to carefully ensure that there are no ways for a lock to be claimed and never released. (There are other potential dangers when programming with mutexes, such as deadlocks and livelocks. You should consult the large amount of literature already written on mutexes, if you decide to go this route.)</p>
 <div style='font-size: 80%; display: inline;'>* Some may object to the use of the term <i>race condition</i> since Ethereum does not currently have true parallelism. However, there is still the fundamental feature of logically distinct processes contending for resources, and the same sorts of pitfalls and potential solutions apply.</div>
 
-<h3 id="transaction-ordering-dependence-tod-front-running">Transaction-Ordering Dependence (TOD) / Front Running<a class="headerlink" href="#transaction-ordering-dependence-tod-front-running" title="Permanent link">&para;</a></h3>
+<h2 id="transaction-ordering-dependence-tod-front-running">Transaction-Ordering Dependence (TOD) / Front Running<a class="headerlink" href="#transaction-ordering-dependence-tod-front-running" title="Permanent link">&para;</a></h2>
 <p>Above were examples of race conditions involving the attacker executing malicious code <em>within a single transaction</em>. The following are a different type of race condition inherent to Blockchains: the fact that <em>the order of transactions themselves</em> (within a block) is easily subject to manipulation.</p>
 <p>Since a transaction is in the mempool for a short while, one can know what actions will occur, before it is included in a block. This can be troublesome for things like decentralized markets, where a transaction to buy some tokens can be seen, and a market order implemented before the other transaction gets included. Protecting against this is difficult, as it would come down to the specific contract itself. For example, in markets, it would be better to implement batch auctions (this also protects against high frequency trading concerns). Another way to use a pre-commit scheme (“I’m going to submit the details later”).</p>
-<h3 id="timestamp-dependence">Timestamp Dependence<a class="headerlink" href="#timestamp-dependence" title="Permanent link">&para;</a></h3>
+<h2 id="timestamp-dependence">Timestamp Dependence<a class="headerlink" href="#timestamp-dependence" title="Permanent link">&para;</a></h2>
 <p>Be aware that the timestamp of the block can be manipulated by the miner, and all direct and indirect uses of the timestamp should be considered. <em>Block numbers</em> and <em>average block time</em> can be used to estimate time, but this is not future proof as block times may change (such as the changes expected during Casper).</p>
 <div class="codehilite"><pre><span></span>uint someVariable = now + 1;
 
@@ -742,7 +742,7 @@ if ((someVariable - 100) % 2 == 0) { // someVariable can be manipulated by the m
 }
 </pre></div>
 
-<h3 id="integer-overflow-and-underflow">Integer Overflow and Underflow<a class="headerlink" href="#integer-overflow-and-underflow" title="Permanent link">&para;</a></h3>
+<h2 id="integer-overflow-and-underflow">Integer Overflow and Underflow<a class="headerlink" href="#integer-overflow-and-underflow" title="Permanent link">&para;</a></h2>
 <p>Be aware there are around <a href="https://github.com/ethereum/solidity/issues/796#issuecomment-253578925">20 cases for overflow and underflow</a>.</p>
 <p>Consider a simple token transfer:</p>
 <div class="codehilite"><pre><span></span>mapping (address =&gt; uint256) public balanceOf;
@@ -771,7 +771,7 @@ function transfer(address _to, uint256 _value) {
 <p>The same is true for underflow. If a uint is made to be less than zero, it will cause an underflow and get set to its maximum value.</p>
 <p>Be careful with the smaller data-types like uint8, uint16, uint24...etc: they can even more easily hit their maximum value.</p>
 <p>Be aware there are around <a href="https://github.com/ethereum/solidity/issues/796#issuecomment-253578925">20 cases for overflow and underflow</a>.</p>
-<h3 id="dos-with-unexpected-revert">DoS with (Unexpected) revert<a class="headerlink" href="#dos-with-unexpected-revert" title="Permanent link">&para;</a></h3>
+<h2 id="dos-with-unexpected-revert">DoS with (Unexpected) revert<a class="headerlink" href="#dos-with-unexpected-revert" title="Permanent link">&para;</a></h2>
 <p>Consider a simple auction contract:</p>
 <div class="codehilite"><pre><span></span>// INSECURE
 contract Auction {
@@ -803,7 +803,7 @@ function refundAll() public {
 </pre></div>
 
 <p>Again, the recommended solution is to <a href="#favor-pull-over-push-payments">favor pull over push payments</a>.</p>
-<h3 id="dos-with-block-gas-limit">DoS with Block Gas Limit<a class="headerlink" href="#dos-with-block-gas-limit" title="Permanent link">&para;</a></h3>
+<h2 id="dos-with-block-gas-limit">DoS with Block Gas Limit<a class="headerlink" href="#dos-with-block-gas-limit" title="Permanent link">&para;</a></h2>
 <p>You may have noticed another problem with the previous example: by paying out to everyone at once, you risk running into the block gas limit. Each Ethereum block can process a certain maximum amount of computation. If you try to go over that, your transaction will fail.</p>
 <p>This can lead to problems even in the absence of an intentional attack. However, it's especially bad if an attacker can manipulate the amount of gas needed. In the case of the previous example, the attacker could add a bunch of addresses, each of which needs to get a very small refund. The gas cost of refunding each of the attacker's addresses could, therefore, end up being more than the gas limit, blocking the refund transaction from happening at all.</p>
 <p>This is another reason to <a href="#favor-pull-over-push-payments">favor pull over push payments</a>.</p>
@@ -826,7 +826,7 @@ function payOut() {
 </pre></div>
 
 <p>You will need to make sure that nothing bad will happen if other transactions are processed while waiting for the next iteration of the <code>payOut()</code> function. So only use this pattern if absolutely necessary.</p>
-<h3 id="call-depth-attack"><del>Call Depth Attack</del><a class="headerlink" href="#call-depth-attack" title="Permanent link">&para;</a></h3>
+<h2 id="call-depth-attack"><del>Call Depth Attack</del><a class="headerlink" href="#call-depth-attack" title="Permanent link">&para;</a></h2>
 <p>As of the <a href="https://github.com/ethereum/EIPs/issues/150">EIP 150</a> hardfork, call depth attacks are no longer relevant<sup><a href='http://ethereum.stackexchange.com/questions/9398/how-does-eip-150-change-the-call-depth-attack'>*</a></sup> (all gas would be consumed well before reaching the 1024 call depth limit).</p>
                 
                   
