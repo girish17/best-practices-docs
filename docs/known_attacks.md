@@ -1,5 +1,3 @@
-## Known Attacks
-
 ### Race Conditions
 
 One of the major dangers of calling external contracts is that they can take over the control flow, and make changes to your data that the calling function wasn't expecting. This class of bug can take many forms, and both of the major bugs that led to the DAO's collapse were bugs of this sort.
@@ -9,6 +7,7 @@ One of the major dangers of calling external contracts is that they can take ove
 The first version of this bug to be noticed involved functions that could be called repeatedly, before the first invocation of the function was finished. This may cause the different invocations of the function to interact in destructive ways.
 
 ```
+
 // INSECURE
 mapping (address => uint) private userBalances;
 
