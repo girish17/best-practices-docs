@@ -24,7 +24,7 @@ In the example given, the best way to avoid the problem is to [use `send()` inst
 
 However, if you can't remove the external call, the next simplest way to prevent this attack is to make sure you don't call an external function until you've done all the internal work you need to do:
 
-```
+```Solidity
 mapping (address => uint) private userBalances;
 
 function withdrawBalance() public {
@@ -40,7 +40,7 @@ Note that if you had another function which called `withdrawBalance()`, it would
 
 An attacker may also be able to do a similar attack using two different functions that share the same state.
 
-```
+```Solidity
 // INSECURE
 mapping (address => uint) private userBalances;
 
@@ -68,7 +68,7 @@ Since race conditions can occur across multiple functions, and even multiple con
 
 Instead, we have recommended finishing all internal work first, and only then calling the external function. This rule, if followed carefully, will allow you to avoid race conditions. However, you need to not only avoid calling external functions too soon, but also avoid calling functions which call external functions. For example, the following is insecure:
 
-```
+```Solidity
 // INSECURE
 mapping (address => uint) private userBalances;
 mapping (address => bool) private claimedBonus;
@@ -91,7 +91,7 @@ function getFirstWithdrawalBonus(address recipient) public {
 
 Even though `getFirstWithdrawalBonus()` doesn't directly call an external contract, the call in `withdraw()` is enough to make it vulnerable to a race condition. you therefore need to treat `withdraw()` as if it were also untrusted.
 
-```
+```Solidity
 mapping (address => uint) private userBalances;
 mapping (address => bool) private claimedBonus;
 mapping (address => uint) private rewardsForA;
@@ -115,7 +115,7 @@ In addition to the fix making reentry impossible, [untrusted functions have been
 
 Another solution often suggested is a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion). This allows you to "lock" some state so it can only be changed by the owner of the lock. A simple example might look like this:
 
-```
+```Solidity
 // Note: This is a rudimentary example, and mutexes are particularly useful where there is substantial logic and/or shared state
 mapping (address => uint) private balances;
 bool private lockBalances;
@@ -148,7 +148,7 @@ function withdraw(uint amount) payable public returns (bool) {
 
 If the user tries to call `withdraw()` again before the first call finishes, the lock will prevent it from having any effect. This can be an effective pattern, but it gets tricky when you have multiple contracts that need to cooperate. The following is insecure:
 
-```
+```Solidity
 // INSECURE
 contract StateHolder {
     uint private n;
@@ -184,7 +184,7 @@ Since a transaction is in the mempool for a short while, one can know what actio
 
 Be aware that the timestamp of the block can be manipulated by the miner, and all direct and indirect uses of the timestamp should be considered. *Block numbers* and *average block time* can be used to estimate time, but this is not future proof as block times may change (such as the changes expected during Casper).
 
-```
+```Solidity
 uint someVariable = now + 1;
 
 if (now % 2 == 0) { // the now can be manipulated by the miner
@@ -202,7 +202,7 @@ Be aware there are around [20 cases for overflow and underflow](https://github.c
 
 Consider a simple token transfer:
 
-```
+```Solidity
 mapping (address => uint256) public balanceOf;
 
 // INSECURE
@@ -237,7 +237,7 @@ Be aware there are around [20 cases for overflow and underflow](https://github.c
 
 Consider a simple auction contract:
 
-```
+```Solidity
 // INSECURE
 contract Auction {
     address currentLeader;
@@ -259,7 +259,7 @@ When it tries to refund the old leader, it reverts if the refund fails. This mea
 Another example is when a contract may iterate through an array to pay users (e.g., supporters in a crowdfunding contract). It's common to want to make sure that each payment succeeds. If not, one should revert. The issue is that if one call fails, you are reverting the whole payout system, meaning the loop will never complete. No one gets paid because one address is forcing an error.
 
 
-```
+```Solidity
 address[] private refundAddresses;
 mapping (address => uint) public refunds;
 
@@ -283,7 +283,7 @@ This is another reason to [favor pull over push payments](#favor-pull-over-push-
 
 If you absolutely must loop over an array of unknown size, then you should plan for it to potentially take multiple blocks, and therefore require multiple transactions. You will need to keep track of how far you've gone, and be able to resume from that point, as in the following example:
 
-```
+```Solidity
 struct Payee {
     address addr;
     uint256 value;

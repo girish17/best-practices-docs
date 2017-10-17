@@ -5,7 +5,7 @@
 Calls to untrusted contracts can introduce several unexpected risks or errors. External calls may execute malicious code in that contract _or_ any other contract that it depends upon. As such, every external call should be treated as a potential security risk and removed if possible. When it is not possible to remove external calls, use the recommendations in the rest of this section to minimize the danger.
 
 
-### Be aware of the tradeoffs between `send()`, `transfer()`, and `call.value()()`
+### Be aware of the tradeoffs between `#!sol send()`, `#!sol transfer()`, and `#!sol call.value()()`
 
 When sending Ether be aware of the relative tradeoffs between the use of
 `someAddress.send()`, `someAddress.transfer()`, and `someAddress.call.value()()`.
@@ -37,7 +37,7 @@ Solidity offers low-level call methods that work on raw addresses: `address.call
 
 If you choose to use the low-level call methods, make sure to handle the possibility that the call will fail, by checking the return value.
 
-```
+```Solidity
 // bad
 someAddress.send(55);
 someAddress.call.value(55)(); // this is doubly dangerous, as it will forward all remaining gas and doesn't check for result
@@ -59,7 +59,7 @@ Whether using *raw calls* or *contract calls*, assume that malicious code will e
 
 External calls can fail accidentally or deliberately. To minimize the damage caused by such failures, it is often better to isolate each external call into its own transaction that can be initiated by the recipient of the call. This is especially relevant for payments, where it is better to let users withdraw funds rather than push funds to them automatically. (This also reduces the chance of [problems with the gas limit](https://github.com/ConsenSys/smart-contract-best-practices/#dos-with-block-gas-limit).)  Avoid combining multiple `send()` calls in a single transaction.
 
-```
+```Solidity
 // bad
 contract auction {
     address highestBidder;
@@ -107,7 +107,7 @@ contract auction {
 
 When interacting with external contracts, name your variables, methods, and contract interfaces in a way that makes it clear that interacting with them is potentially unsafe. This applies to your own functions that call external contracts.
 
-```
+```Solidity
 // bad
 Bank.withdraw(100); // Unclear whether trusted or untrusted
 
@@ -130,7 +130,7 @@ An assert guard triggers when an assertion fails - such as an invariant property
 
 Example:
 
-```
+```Solidity
 contract Token {
     mapping(address => uint) public balanceOf;
     uint public totalSupply;
@@ -156,7 +156,7 @@ All integer division rounds down to the nearest integer. If you need more precis
 
 (In the future, Solidity will have a fixed-point type, which will make this easier.)
 
-```
+```Solidity
 // bad
 uint x = 5 / 2; // Result is 2, all integer divison rounds DOWN to the nearest integer
 
@@ -205,7 +205,7 @@ Do not make refund or claim processes dependent on a specific party performing a
 
 [Fallback functions](http://solidity.readthedocs.io/en/latest/contracts.html#fallback-function) are called when a contract is sent a message with no arguments (or when no function matches), and only has access to 2,300 gas when called from a `.send()` or `.transfer()`. If you wish to be able to receive Ether from a `.send()` or `.transfer()`, the most you can do in a fallback function is log an event. Use a proper function if a computation or more gas is required.
 
-```
+```Solidity
 // bad
 function() payable { balances[msg.sender] += msg.value; }
 
@@ -219,7 +219,7 @@ function() payable { LogDepositReceived(msg.sender); }
 
 Explicitly label the visibility of functions and state variables. Functions can be specified as being `external`, `public`, `internal` or `private`. Please understand the differences between them, for example, `external` may be sufficient instead of `public`. For state variables, `external` is not possible. Labeling the visibility explicitly will make it easier to catch incorrect assumptions about who can call the function or access the variable.
 
-```
+```Solidity
 // bad
 uint x; // the default is private for state variables, but it should be made explicit
 function buy() { // the default is public
@@ -246,7 +246,7 @@ function internalAction() internal {
 
 Contracts should be deployed with the same compiler version and flags that they have been tested the most with. Locking the pragma helps ensure that contracts do not accidentally get deployed using, for example, the latest compiler which may have higher risks of undiscovered bugs. Contracts may also be deployed by others and the pragma indicates the compiler version intended by the original authors.
 
-```
+```Solidity
 // bad
 pragma solidity ^0.4.4;
 
@@ -263,7 +263,7 @@ Prior to version 0.4, Solidity [returns zero](https://github.com/ethereum/solidi
 
 Favor capitalization and a prefix in front of events (we suggest *Log*), to prevent the risk of confusion between functions and events. For functions, always start with a lowercase letter, except for the constructor.
 
-```
+```Solidity
 // bad
 event Transfer() {}
 function transfer() {}

@@ -18,7 +18,7 @@ It's also critical to have a secure way for parties to decide to upgrade the cod
 
 In this example, the calls aren't forwarded, so users should fetch the current address each time before interacting with it.
 
-```
+```Solidity
 contract SomeRegister {
     address backendContract;
     address[] previousBackends;
@@ -57,7 +57,7 @@ The alternate approach is to have a contract forward calls and data to the lates
 
 **Example 2: [Use a `DELEGATECALL`](http://ethereum.stackexchange.com/questions/2404/upgradeable-contracts) to forward data and calls**
 
-```
+```Solidity
 contract Relay {
     address public currentVersion;
     address public owner;
@@ -94,7 +94,7 @@ Circuit breakers stop execution if certain conditions are met, and can be useful
 
 Example:
 
-```
+```Solidity
 bool private stopped = false;
 address private owner;
 
@@ -129,7 +129,7 @@ Speed bumps slow down actions, so that if malicious actions occur, there is time
 
 Example:
 
-```
+```Solidity
 struct RequestedWithdrawal {
     uint amount;
     uint time;
@@ -184,7 +184,7 @@ At minimum, you should:
 
 During testing, you can force an automatic deprecation by preventing any actions, after a certain time period. For example, an alpha contract may work for several weeks and then automatically shut down all actions, except for the final withdrawal.
 
-```
+```Solidity
 modifier isActive() {
     require(block.number <= SOME_BLOCK_NUMBER);
     _;
