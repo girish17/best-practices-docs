@@ -6,7 +6,7 @@ One of the major dangers of calling external contracts is that they can take ove
 
 The first version of this bug to be noticed involved functions that could be called repeatedly, before the first invocation of the function was finished. This may cause the different invocations of the function to interact in destructive ways.
 
-```
+```Solidity
 
 // INSECURE
 mapping (address => uint) private userBalances;

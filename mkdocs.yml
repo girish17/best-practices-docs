@@ -25,13 +25,14 @@ theme: 'material'
 
 markdown_extensions:
   - markdown.extensions.admonition
-  - markdown.extensions.codehilite(guess_lang=false)
   # note for code highlighting a get_style_defs() function must be written for the pygments-solidity-lexer
   # /Users/primary/.pyenv/versions/3.6.1/lib/python3.6/site-packages/pygments_lexer_solidity/lexer.py
   - markdown.extensions.def_list
   - markdown.extensions.footnotes
   - markdown.extensions.meta
   - markdown.extensions.toc(permalink=true)
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
   - pymdownx.arithmatex
   - pymdownx.betterem(smart_enable=all)
   - pymdownx.caret
@@ -39,7 +40,6 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
-  - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
